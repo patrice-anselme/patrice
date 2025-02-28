@@ -1,0 +1,32 @@
+{
+  "vente": [
+    {
+      "id": 1,
+      "name": "PC Portable",
+      "type": "Electronique",
+      "price": 300000,
+      "image": "pc"
+    },
+    {
+      "id": 2,
+      "name": "Phone",
+      "type": "appareil photo",
+      "price": 160000,
+      "image": "phone"
+    },
+    {
+      "id": 3,
+      "name": "clavier",
+      "type": "peripherique",
+      "price": 25000,
+      "image": "clavier"
+    },
+    {
+      "id": 4,
+      "name": "usb",
+      "type": "peripherique",
+      "price": 15000,
+      "image": "usb"
+    }
+  ]
+}

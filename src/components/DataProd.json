@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "PC Portable",
+      "type": "Electronique",
+      "price": 799,
+      "image": "prpd1"
+    },
+    {
+      "id": 2,
+      "name": "Guitare Acoustique",
+      "type": "Musique",
+      "price": 149,
+      "image": "prod3"
+    },
+    {
+      "id": 3,
+      "name": "Casque Client",
+      "type": "Audio",
+      "price": 89,
+      "image": "prod2"
+    }
+  ]
+}
