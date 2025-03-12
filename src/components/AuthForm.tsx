@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AuthForm.css'
 import google from'../assets/google.svg'
@@ -7,7 +7,7 @@ export default function AuthForm() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     if (email === 'toto@gmail.com' && password === 'toto') {
       alert('Connexion réussie !');

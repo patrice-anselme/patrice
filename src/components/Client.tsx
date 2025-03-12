@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useSearchStore} from './Zustand'
+import { useSearchStore } from "./Zustand";
 
 type Product = {
   id: number;
@@ -24,26 +24,27 @@ const productsList: Product[] = [
 const Client: React.FC = () => {
   const { searchTerm } = useSearchStore();
   const [clientName, setClientName] = useState<string>("");
-  const [contact, setContact] = useState<string>("");
+  const [contact, setContact] = useState<{ email: string; phone: string }>({
+    email: "",
+    phone: "",
+  });
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-
- const [clients, setClients] = useState<ClientData[]>([
-  {
-    id: 1,
-    name: "Jean Dupont",
-    contact: "jean.dupont@example.com",
-    products: [{ id: 1, name: "Abonnement Premium", price: 100 }],
-    total: 100,
-  },
-  {
-    id: 2,
-    name: "Marie Leclerc",
-    contact: "marie.leclerc@example.com",
-    products: [{ id: 2, name: "Pack de formations avancées", price: 500 }],
-    total: 500,
-  },
-]);
-
+  const [clients, setClients] = useState<ClientData[]>([
+    {
+      id: 1,
+      name: "Jean Dupont",
+      contact: { email: "jean.dupont@example.com", phone: "0123456789" },
+      products: [{ id: 1, name: "Abonnement Premium", price: 100 }],
+      total: 100,
+    },
+    {
+      id: 2,
+      name: "Marie Leclerc",
+      contact: { email: "marie.leclerc@example.com", phone: "0987654321" },
+      products: [{ id: 2, name: "Pack de formations avancées", price: 500 }],
+      total: 500,
+    },
+  ]);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
   const handleAddProduct = () => {
@@ -62,7 +63,7 @@ const Client: React.FC = () => {
   const totalPrice = selectedProducts.reduce((sum, product) => sum + product.price, 0);
 
   const handleAddClient = () => {
-    if (!clientName || !contact || selectedProducts.length === 0) {
+    if (!clientName || !contact.email || !contact.phone || selectedProducts.length === 0) {
       alert("Veuillez remplir tous les champs et sélectionner au moins un produit.");
       return;
     }
@@ -77,19 +78,21 @@ const Client: React.FC = () => {
 
     setClients((prev) => [...prev, newClient]);
     setClientName("");
-    setContact("");
+    setContact({ email: "", phone: "" });
     setSelectedProducts([]);
     setSelectedProductId(null);
   };
+
   const filteredClients = clients.filter((client) =>
     client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    client.contact.toLowerCase().includes(searchTerm.toLowerCase()));
+    client.contact.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold text-center">Gestion des Clients</h1>
 
-      {/* Formulaire pour ajouter un client */}
+    
       <div className="mb-6">
         <label className="block text-gray-700 font-medium mb-2">Nom du client</label>
         <input
@@ -101,17 +104,27 @@ const Client: React.FC = () => {
         />
       </div>
       <div className="mb-6">
-        <label className="block text-gray-700 font-medium mb-2">Contact</label>
+        <label className="block text-gray-700 font-medium mb-2">Email</label>
         <input
-          type="text"
-          value={contact}
-          onChange={(e) => setContact(e.target.value)}
+          type="email"
+          value={contact.email}
+          onChange={(e) => setContact({ ...contact, email: e.target.value })}
           className="w-full border border-gray-300 rounded-lg px-3 py-2"
-          placeholder="Entrez le contact"
+          placeholder="Entrez l'email"
+        />
+      </div>
+      <div className="mb-6">
+        <label className="block text-gray-700 font-medium mb-2">Téléphone</label>
+        <input
+          type="tel"
+          value={contact.phone}
+          onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+          className="w-full border border-gray-300 rounded-lg px-3 py-2"
+          placeholder="Entrez le téléphone"
         />
       </div>
 
-      {/* Sélection des produits */}
+     
       <div className="mb-6">
         <label className="block text-gray-700 font-medium mb-2">Produits</label>
         <div className="flex items-center space-x-2">
@@ -138,7 +151,7 @@ const Client: React.FC = () => {
         </div>
       </div>
 
-      {/* Liste des produits sélectionnés */}
+     
       <div className="mb-6">
         <h3 className="text-lg font-bold">Produits Sélectionnés</h3>
         <ul>
@@ -159,7 +172,7 @@ const Client: React.FC = () => {
         <h3 className="text-lg font-bold mt-2">Total: {totalPrice}€</h3>
       </div>
 
-      {/* Ajouter le client */}
+   
       <div className="mt-4">
         <button
           onClick={handleAddClient}
@@ -169,7 +182,6 @@ const Client: React.FC = () => {
         </button>
       </div>
 
-      {/* Tableau des clients */}
       <div className="mt-8">
         <h2 className="text-xl font-bold">Liste des Clients</h2>
         <table className="table-auto w-full border-collapse border border-gray-300 mt-4">
@@ -185,7 +197,9 @@ const Client: React.FC = () => {
             {filteredClients.map((client) => (
               <tr key={client.id} className="hover:bg-gray-50">
                 <td className="border border-gray-300 px-4 py-2">{client.name}</td>
-                <td className="border border-gray-300 px-4 py-2">{client.contact}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {client.contact.email} <br /> {client.contact.phone}
+                </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {client.products.map((product) => product.name).join(", ")}
                 </td>

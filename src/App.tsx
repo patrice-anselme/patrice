@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { Routes, Route } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import Dashboard from './components/Dashboard';
 import Product from './components/Product';
