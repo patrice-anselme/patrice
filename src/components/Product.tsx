@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { createPortal } from "react-dom";
 import pc from "../assets/produit/pc1.jpeg";
 import batterie from "../assets/produit/batterie.jpeg";
@@ -86,7 +86,7 @@ const Products: React.FC = () => {
   const addProduct = (e: React.FormEvent) => {
     e.preventDefault();
     if (newProduct.name && newProduct.type && newProduct.price) {
-      setProducts((prev) => [
+      setProducts((prev:any) => [
         ...prev,
         { ...newProduct, id: Date.now() },
       ]);
